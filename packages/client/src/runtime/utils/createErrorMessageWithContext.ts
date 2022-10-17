@@ -3,6 +3,7 @@ import indentString from 'indent-string'
 
 import { allClientModelActions } from '../clientActions'
 import { CallSite, LocationInFile } from './CallSite'
+import { isBrowser } from './isBrowser'
 import { SourceFileSlice } from './SourceFileSlice'
 
 export interface ErrorArgs {
@@ -60,8 +61,8 @@ function getTemplateParameters(
     isPanic: isPanic ?? false,
     callArguments,
   }
-  // @ts-ignore
-  if (!callsite || typeof window !== 'undefined') {
+
+  if (!callsite || isBrowser()) {
     return templateParameters
   }
 
