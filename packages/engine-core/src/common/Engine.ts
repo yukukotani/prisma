@@ -1,4 +1,4 @@
-import type { DataSource, DMMF, EnvValue, GeneratorConfig } from '@prisma/generator-helper'
+import type { DataSource, DMMF, GeneratorConfig } from '@prisma/generator-helper'
 
 import { TracingConfig } from '../tracing/getTracingConfig'
 import type { Metrics, MetricsOptionsJson, MetricsOptionsPrometheus } from './types/Metrics'
