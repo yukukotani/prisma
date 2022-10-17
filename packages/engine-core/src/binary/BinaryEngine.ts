@@ -76,7 +76,6 @@ export type StopDeferred = {
 }
 
 const engines: BinaryEngine[] = []
-const socketPaths: string[] = []
 
 const MAX_STARTS = process.env.PRISMA_CLIENT_NO_RETRY ? 1 : 2
 const MAX_REQUEST_RETRIES = process.env.PRISMA_CLIENT_NO_RETRY ? 1 : 2
@@ -100,7 +99,6 @@ export class BinaryEngine extends Engine {
   private engineEndpoint?: string
   private lastErrorLog?: RustLog
   private lastRustError?: RustError
-  private socketPath?: string
   private getConfigPromise?: Promise<GetConfigResult>
   private getDmmfPromise?: Promise<DMMF.Document>
   private stopPromise?: Promise<void>
@@ -1215,16 +1213,6 @@ function hookProcess(handler: string, exit = false) {
       engine.kill(handler)
     }
     engines.splice(0, engines.length)
-
-    if (socketPaths.length > 0) {
-      for (const socketPath of socketPaths) {
-        try {
-          fs.unlinkSync(socketPath)
-        } catch (e) {
-          //
-        }
-      }
-    }
 
     // only exit, if only we are listening
     // if there is another listener, that other listener is responsible
